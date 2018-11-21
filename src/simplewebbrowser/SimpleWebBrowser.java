@@ -166,11 +166,13 @@ package simplewebbrowser;
      SwingUtilities.invokeLater(new Runnable() {  
        public void run() {  
          SimpleWebBrowser browser = new SimpleWebBrowser(); 
-        ImageIcon image = new ImageIcon("C:\\Users\\zaf_h\\OneDrive\\デスクトップ\\denpa.PNG");
+         ImageIcon imageicon = new ImageIcon(getClass().getResource("/resource/icon/remote.png"));
+        //ImageIcon image = new ImageIcon("C:\\Users\\zaf_h\\OneDrive\\デスクトップ\\denpa.PNG");
         // Image icon = new Image(getClass().getResourceAsStream( "C:\\Users\\zaf_h\\OneDrive\\デスクトップ\\denpa.PNG" ));
-         browser.setIconImage(image.getImage());
+         browser.setIconImage(imageicon.getImage());
          browser.setVisible(true);  
-         browser.loadURL("https://kyokuto.work/remote/");  
+         browser.loadURL("https://google.co.jp");
+         //browser.loadURL("https://kyokuto.work/remote/");  
          try {  
            Thread.sleep(5000);  
          } catch (InterruptedException e) {  
