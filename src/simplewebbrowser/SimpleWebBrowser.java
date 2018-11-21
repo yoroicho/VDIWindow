@@ -171,8 +171,8 @@ package simplewebbrowser;
         // Image icon = new Image(getClass().getResourceAsStream( "C:\\Users\\zaf_h\\OneDrive\\デスクトップ\\denpa.PNG" ));
          browser.setIconImage(imageicon.getImage());
          browser.setVisible(true);  
-         browser.loadURL("https://google.co.jp");
-         //browser.loadURL("https://kyokuto.work/remote/");  
+         // browser.loadURL("https://google.co.jp");
+         browser.loadURL("https://kyokuto.work/remote/");  
          try {  
            Thread.sleep(5000);  
          } catch (InterruptedException e) {  
