@@ -86,6 +86,11 @@ package simplewebbrowser;
                @Override  
                public void run() {  
                  progressBar.setValue(newValue.intValue());  
+                 if(newValue.intValue()==100){
+                     progressBar.setVisible(false);                     
+                 }else{
+                     progressBar.setVisible(true);
+                 }
                }  
              });  
            }  
