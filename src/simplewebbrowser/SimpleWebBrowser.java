@@ -22,6 +22,7 @@ import java.awt.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
+import java.util.Optional;
 import static javafx.concurrent.Worker.State.FAILED;
 
 public class SimpleWebBrowser extends JFrame {
@@ -179,17 +180,25 @@ public class SimpleWebBrowser extends JFrame {
     }
 
     public static void main(String[] args) {
+
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+                ImageIcon imageicon = new ImageIcon(getClass().getResource("/resource/icon/remote.png"));
+                String urlText = JOptionPaneShowInputDialogURL.JOptionPaneShowInputDialogURL(imageicon);;
                 SimpleWebBrowser browser = new SimpleWebBrowser();
                 browser.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                ImageIcon imageicon = new ImageIcon(getClass().getResource("/resource/icon/remote.png"));
+//System.out.println("urlText"+urlText);
                 //ImageIcon image = new ImageIcon("C:\\Users\\zaf_h\\OneDrive\\デスクトップ\\denpa.PNG");
                 // Image icon = new Image(getClass().getResourceAsStream( "C:\\Users\\zaf_h\\OneDrive\\デスクトップ\\denpa.PNG" ));
                 browser.setIconImage(imageicon.getImage());
                 browser.setVisible(true);
                 // browser.loadURL("https://google.co.jp");
-                browser.loadURL("https://kyokuto.work/remote");  // IPで指定すると作動しない。
+                //browser.loadURL("https://kyokuto.work/remote");  // IPで指定すると作動しない。
+                if (urlText.startsWith("https://")) {
+                    browser.loadURL(urlText);
+                } else {
+                    browser.loadURL("https://" + urlText);
+                }
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {
