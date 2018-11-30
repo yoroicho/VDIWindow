@@ -19,17 +19,13 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.Optional;
 import static javafx.concurrent.Worker.State.FAILED;
 
-public class SimpleWebBrowserScrTest extends JFrame {
+public class SimpleWebBrowser20181130 extends JFrame {
 
     private final JFXPanel jfxPanel = new JFXPanel();
     private WebEngine engine;
@@ -37,57 +33,9 @@ public class SimpleWebBrowserScrTest extends JFrame {
     private final JLabel lblStatus = new JLabel();
     private final JProgressBar progressBar = new JProgressBar();
 
-    public SimpleWebBrowserScrTest() {
+    public SimpleWebBrowser20181130() {
         super();
         initComponents();
-    }
-
-    private class TimerKeyListener implements KeyListener {
-
-        @Override
-        public void keyTyped(KeyEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-    }
-
-    private class TimerMouseListener implements MouseListener {
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
     }
 
     private void initComponents() {
@@ -105,8 +53,6 @@ public class SimpleWebBrowserScrTest extends JFrame {
         panel.add(statusBar, BorderLayout.SOUTH);
         getContentPane().add(panel);
         setPreferredSize(new Dimension(1024, 600));
-        jfxPanel.addKeyListener(new TimerKeyListener());
-        jfxPanel.addMouseListener(new TimerMouseListener());
         pack();
     }
 
@@ -122,8 +68,8 @@ public class SimpleWebBrowserScrTest extends JFrame {
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
-                                // SimpleWebBrowser.this.setTitle(newValue);  
-                                SimpleWebBrowserScrTest.this.setTitle("リモート デスクトップ接続");
+                                // SimpleWebBrowser20181130.this.setTitle(newValue);  
+                                SimpleWebBrowser20181130.this.setTitle("リモート デスクトップ接続");
                             }
                         });
                     }
@@ -239,7 +185,7 @@ public class SimpleWebBrowserScrTest extends JFrame {
             public void run() {
                 ImageIcon imageicon = new ImageIcon(getClass().getResource("/resource/icon/remote.png"));
                 String urlText = JOptionPaneShowInputDialogURL.JOptionPaneShowInputDialogURL(imageicon);;
-                SimpleWebBrowserScrTest browser = new SimpleWebBrowserScrTest();
+                SimpleWebBrowser20181130 browser = new SimpleWebBrowser20181130();
                 browser.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //System.out.println("urlText"+urlText);
                 //ImageIcon image = new ImageIcon("C:\\Users\\zaf_h\\OneDrive\\デスクトップ\\denpa.PNG");

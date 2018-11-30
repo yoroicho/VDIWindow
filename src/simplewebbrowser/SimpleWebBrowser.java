@@ -19,10 +19,16 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.Optional;
+import java.util.TimerTask;
+import java.util.Timer;
 import static javafx.concurrent.Worker.State.FAILED;
 
 public class SimpleWebBrowser extends JFrame {
@@ -33,9 +39,77 @@ public class SimpleWebBrowser extends JFrame {
     private final JLabel lblStatus = new JLabel();
     private final JProgressBar progressBar = new JProgressBar();
 
+    private TimerTask timeOutTask;
+
     public SimpleWebBrowser() {
         super();
         initComponents();
+    }
+
+    private class TimerKeyListener implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+            timeOutTask.cancel();
+            setTimeOutTask();
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            timeOutTask.cancel();
+            setTimeOutTask();
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            timeOutTask.cancel();
+            setTimeOutTask();
+        }
+
+    }
+
+    private class TimerMouseListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            timeOutTask.cancel();
+            setTimeOutTask();
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            timeOutTask.cancel();
+            setTimeOutTask();
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            timeOutTask.cancel();
+            setTimeOutTask();
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+    }
+
+    private void setTimeOutTask() {
+        Timer timer = new Timer(true);
+        timeOutTask = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("強制終了");
+                System.exit(0);
+            }
+        };
+        timer.schedule(timeOutTask, 60000);
     }
 
     private void initComponents() {
@@ -53,7 +127,10 @@ public class SimpleWebBrowser extends JFrame {
         panel.add(statusBar, BorderLayout.SOUTH);
         getContentPane().add(panel);
         setPreferredSize(new Dimension(1024, 600));
+        jfxPanel.addKeyListener(new TimerKeyListener());
+        jfxPanel.addMouseListener(new TimerMouseListener());
         pack();
+        setTimeOutTask();
     }
 
     private void createScene() {
