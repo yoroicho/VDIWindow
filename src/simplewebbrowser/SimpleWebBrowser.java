@@ -26,7 +26,6 @@ import java.awt.event.MouseListener;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
-import java.util.Optional;
 import java.util.TimerTask;
 import java.util.Timer;
 import static javafx.concurrent.Worker.State.FAILED;
@@ -40,6 +39,9 @@ public class SimpleWebBrowser extends JFrame {
     private final JProgressBar progressBar = new JProgressBar();
 
     private TimerTask timeOutTask;
+    private TimerTask noticeBefore;
+    private final long outerTime = 60000;
+    private final long noticeBeforeRange = 6000;
 
     public SimpleWebBrowser() {
         super();
@@ -50,20 +52,17 @@ public class SimpleWebBrowser extends JFrame {
 
         @Override
         public void keyTyped(KeyEvent e) {
-            timeOutTask.cancel();
-            setTimeOutTask();
+            cancelTimeOutCountDown();
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
-            timeOutTask.cancel();
-            setTimeOutTask();
+            cancelTimeOutCountDown();
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
-            timeOutTask.cancel();
-            setTimeOutTask();
+            cancelTimeOutCountDown();
         }
 
     }
@@ -72,20 +71,17 @@ public class SimpleWebBrowser extends JFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            timeOutTask.cancel();
-            setTimeOutTask();
+            cancelTimeOutCountDown();
         }
 
         @Override
         public void mousePressed(MouseEvent e) {
-            timeOutTask.cancel();
-            setTimeOutTask();
+            cancelTimeOutCountDown();
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            timeOutTask.cancel();
-            setTimeOutTask();
+            cancelTimeOutCountDown();
         }
 
         @Override
@@ -109,7 +105,35 @@ public class SimpleWebBrowser extends JFrame {
                 System.exit(0);
             }
         };
-        timer.schedule(timeOutTask, 60000);
+        timer.schedule(timeOutTask, outerTime + noticeBeforeRange);
+    }
+
+    private void setNoticeBeforeTask() {
+        Timer timer = new Timer(true);
+        noticeBefore = new TimerTask() {
+            int i=100;
+            @Override
+            public void run() {
+                System.out.println("終了警告");
+                progressBar.setVisible(true);
+
+                progressBar.setValue(i);
+i=i-20;
+                //SimpleWebBrowser.setDefaultLookAndFeelDecorated(false);
+                //SimpleWebBrowser.this.rootPane.setOpaque(false);
+                //SimpleWebBrowser.setOpacity(0.51f);
+            }
+        };
+        timer.scheduleAtFixedRate(noticeBefore, outerTime,1000);
+    }
+
+    private void cancelTimeOutCountDown() {
+        noticeBefore.cancel();
+        timeOutTask.cancel();
+        //SimpleWebBrowser.this.setOpacity(1.0f);
+        progressBar.setVisible(false);
+        setNoticeBeforeTask();
+        setTimeOutTask();
     }
 
     private void initComponents() {
@@ -131,6 +155,7 @@ public class SimpleWebBrowser extends JFrame {
         jfxPanel.addMouseListener(new TimerMouseListener());
         pack();
         setTimeOutTask();
+        setNoticeBeforeTask();
     }
 
     private void createScene() {
@@ -264,6 +289,7 @@ public class SimpleWebBrowser extends JFrame {
                 String urlText = JOptionPaneShowInputDialogURL.JOptionPaneShowInputDialogURL(imageicon);;
                 SimpleWebBrowser browser = new SimpleWebBrowser();
                 browser.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                //browser.setUndecorated(true);
 //System.out.println("urlText"+urlText);
                 //ImageIcon image = new ImageIcon("C:\\Users\\zaf_h\\OneDrive\\デスクトップ\\denpa.PNG");
                 // Image icon = new Image(getClass().getResourceAsStream( "C:\\Users\\zaf_h\\OneDrive\\デスクトップ\\denpa.PNG" ));
