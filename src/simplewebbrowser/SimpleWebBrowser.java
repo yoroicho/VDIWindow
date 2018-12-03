@@ -25,6 +25,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
@@ -88,11 +90,13 @@ public class SimpleWebBrowser extends JFrame {
 
         @Override
         public void mouseEntered(MouseEvent e) {
+            cancelTimeOutCountDown();
             // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
+            cancelTimeOutCountDown();
             // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
@@ -103,6 +107,22 @@ public class SimpleWebBrowser extends JFrame {
         @Override
         public void mouseWheelMoved(MouseWheelEvent e) {
             //System.out.println("mouseWheelMoved");
+            cancelTimeOutCountDown();
+        }
+
+    }
+
+    private class TimerMouseMotionListener implements MouseMotionListener {
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            cancelTimeOutCountDown();
+            // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             cancelTimeOutCountDown();
         }
 
