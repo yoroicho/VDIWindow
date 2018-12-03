@@ -23,6 +23,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
@@ -96,6 +98,16 @@ public class SimpleWebBrowser extends JFrame {
 
     }
 
+    private class TimerMouseWheelListener implements MouseWheelListener {
+
+        @Override
+        public void mouseWheelMoved(MouseWheelEvent e) {
+            //System.out.println("mouseWheelMoved");
+            cancelTimeOutCountDown();
+        }
+
+    }
+
     private void setTimeOutTask() {
         Timer timer = new Timer(true);
         timeOutTask = new TimerTask() {
@@ -111,20 +123,21 @@ public class SimpleWebBrowser extends JFrame {
     private void setNoticeBeforeTask() {
         Timer timer = new Timer(true);
         noticeBefore = new TimerTask() {
-            int i=100;
+            int i = 100;
+
             @Override
             public void run() {
                 System.out.println("終了警告");
                 progressBar.setVisible(true);
 
                 progressBar.setValue(i);
-i=i-20;
+                i = i - 20;
                 //SimpleWebBrowser.setDefaultLookAndFeelDecorated(false);
                 //SimpleWebBrowser.this.rootPane.setOpaque(false);
                 //SimpleWebBrowser.setOpacity(0.51f);
             }
         };
-        timer.scheduleAtFixedRate(noticeBefore, outerTime,1000);
+        timer.scheduleAtFixedRate(noticeBefore, outerTime, 1000);
     }
 
     private void cancelTimeOutCountDown() {
@@ -134,6 +147,7 @@ i=i-20;
         progressBar.setVisible(false);
         setNoticeBeforeTask();
         setTimeOutTask();
+        System.out.println("TimerRestart");
     }
 
     private void initComponents() {
@@ -153,6 +167,7 @@ i=i-20;
         setPreferredSize(new Dimension(1024, 600));
         jfxPanel.addKeyListener(new TimerKeyListener());
         jfxPanel.addMouseListener(new TimerMouseListener());
+        jfxPanel.addMouseWheelListener(new TimerMouseWheelListener());
         pack();
         setTimeOutTask();
         setNoticeBeforeTask();
